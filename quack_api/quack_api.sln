@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quack_api", "quack_api\quack_api.csproj", "{43D65EC6-C2DB-4959-A295-3D438A7EE1E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quack_api.Test", "quack_api.Test\quack_api.Test.csproj", "{94FE142E-EDAF-43ED-BBE4-A33F97F334DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43D65EC6-C2DB-4959-A295-3D438A7EE1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D65EC6-C2DB-4959-A295-3D438A7EE1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D65EC6-C2DB-4959-A295-3D438A7EE1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D65EC6-C2DB-4959-A295-3D438A7EE1E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FE142E-EDAF-43ED-BBE4-A33F97F334DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FE142E-EDAF-43ED-BBE4-A33F97F334DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FE142E-EDAF-43ED-BBE4-A33F97F334DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FE142E-EDAF-43ED-BBE4-A33F97F334DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {821B0E16-B735-481E-BD38-7A74ABCBC504}
+	EndGlobalSection
+EndGlobal
