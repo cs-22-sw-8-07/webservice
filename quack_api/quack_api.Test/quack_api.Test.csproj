@@ -16,7 +16,10 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
-    <Folder Include="UnitTests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\quack_api\quack_api.csproj" />
   </ItemGroup>
 
 </Project>
