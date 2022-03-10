@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using quack_api.Interfaces;
+using quack_api.Models;
 using quack_api.Objects;
 using quack_api.RecommenderAccessLayer;
 using quack_api.Utilities;
@@ -21,7 +22,7 @@ namespace quack_api.Controllers
         {
             return await ControllerUtil.GetResponse(
                 async () => await RecommenderService.GetPlaylist(accessToken, qlt),
-                (dataResponse) => new WASPResponse<List<CitizenDTO> >(dataResponse.Result));
+                (dataResponse) => new QuackResponse<PlaylistDTO>(dataResponse.Result));
         }
     }
 }

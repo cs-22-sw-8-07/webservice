@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using quack_api.Interfaces;
 using quack_api.Objects;
+using quack_api.Models;
 
 namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        Task<DataResponse> IRecommenderService.GetPlaylist(string accessToken, int qlt)
+        Task<DataResponse<PlaylistDTO>> IRecommenderService.GetPlaylist(string accessToken, int qlt)
         {
             throw new NotImplementedException();
         }
