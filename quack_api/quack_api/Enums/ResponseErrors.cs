@@ -18,6 +18,8 @@ namespace quack_api.Enums
         AnExceptionOccurredInTheDAL = 2,
         ChangesCouldNotBeAppliedToTheDatabase = 5,
         QuackUpdateListBadFormat = 50,
+
+        //TODO: lav error codes til recommender
         
     }
 }
