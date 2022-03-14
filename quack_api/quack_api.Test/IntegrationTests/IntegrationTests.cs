@@ -42,7 +42,7 @@ namespace quack_api.Test.IntegrationTests
             using (var client = server.CreateClient())
             {
                 // Act
-                HttpResponseMessage responseMessage = await client.GetAsync("/WASP/Issue/GetIssueDetails?issueId=1");
+                HttpResponseMessage responseMessage = await client.GetAsync("/Quack/Issue/GetIssueDetails?issueId=1");
                 string content = await responseMessage.Content.ReadAsStringAsync();
 
                 // Assert

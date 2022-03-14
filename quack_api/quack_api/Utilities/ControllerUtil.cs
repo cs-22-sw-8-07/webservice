@@ -11,7 +11,7 @@ namespace quack_api.Utilities
     public class ControllerUtil
     {
         /// <summary>
-        /// Method used to get WASPResponse object
+        /// Method used to get QuackResponse object
         /// </summary>
         /// <typeparam name="TypeDataResponse">DataResponse type</typeparam>
         /// <typeparam name="TypeQuackResponse">QuackResponse type</typeparam>

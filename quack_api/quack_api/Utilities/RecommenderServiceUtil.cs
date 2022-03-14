@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using quack_api.Enums;
 using quack_api.Models;
 using quack_api.Objects;
-using WASP.Objects;
+using Quack.Objects;
 
-namespace WASP.Utilities
+namespace Quack.Utilities
 {
     public class RecommenderServiceUtil
     {
@@ -183,12 +183,12 @@ namespace WASP.Utilities
         }
 
         /// <summary>
-        /// Method used to determine if a given list of WASPUpdate objects follows the correct format
+        /// Method used to determine if a given list of QuackUpdate objects follows the correct format
         /// </summary>
-        /// <param name="input">List of WASPUpdate objects</param>
+        /// <param name="input">List of QuackUpdate objects</param>
         /// <param name="allowedProperties">List of allowed properties that can be updated</param>
         /// <returns></returns>
-        public static bool CheckWASPUpdateList(List<QuackUpdate> input, IEnumerable<string> allowedProperties)
+        public static bool CheckQuackUpdateList(List<QuackUpdate> input, IEnumerable<string> allowedProperties)
         {
             // If input contains duplicates disallow it
             if (input.Distinct().Count() != input.Count)
