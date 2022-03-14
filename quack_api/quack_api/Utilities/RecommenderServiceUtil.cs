@@ -7,12 +7,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using quack_api.Enums;
+using quack_api.Models;
 using quack_api.Objects;
 using WASP.Objects;
 
 namespace WASP.Utilities
 {
-    public class DataServiceUtil
+    public class RecommenderServiceUtil
     {
         /// <summary>
         /// Get PropertyInfo with a given property name
@@ -154,6 +155,32 @@ namespace WASP.Utilities
                 return getErrorResponse(((int)ResponseErrors.AnExceptionOccurredInTheDAL), exc.Message);
             }
         }*/
+
+        public static async Task<TypeDataResponse> GetResponse<TypeDataResponse>
+            (
+                Func<Task<TypeDataResponse>> getDataResponseMethod
+            )
+            where TypeDataResponse : DataResponse
+        {
+            // Nested function used for returning error response object
+            TypeDataResponse getErrorResponse(int errorNo, string errorMessage)
+            {
+                Type type = typeof(TypeDataResponse);
+                ConstructorInfo ctor = type.GetConstructor(new[] { typeof(int), typeof(string) });
+                object instance = ctor.Invoke(new object[] { errorNo, errorMessage });
+                return (TypeDataResponse)instance;
+            }
+
+            try
+            {
+                return await getDataResponseMethod();
+            }
+            catch (Exception exc)
+            {
+                // Return exception
+                return getErrorResponse(((int)ResponseErrors.AnExceptionOccurredInTheDAL), exc.Message);
+            }
+        }
 
         /// <summary>
         /// Method used to determine if a given list of WASPUpdate objects follows the correct format

@@ -1,19 +1,20 @@
 
 using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace quack_api.Models
 {
     public class PlaylistDTO
     {
-        public PlaylistDTO(Playlist playlist)
+        public PlaylistDTO()
         {
-            Id = playlist.Id;
-            LocationType = playlist.LocationType;
-            Tracks = playlist.Tracks.Select(x => new TrackDTO(x)).ToList();
+            Tracks = new List<TrackDTO>();
         }
+        [JsonPropertyName("id")]
         public string Id { get; set; }
+        [JsonPropertyName("location_type")]
         public string LocationType { get; set; }
+        [JsonPropertyName("tracks")]
         public virtual ICollection<TrackDTO> Tracks { get; set; }
     }
 }

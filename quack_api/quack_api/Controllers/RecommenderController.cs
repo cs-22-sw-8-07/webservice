@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using quack_api.Interfaces;
 using quack_api.Models;
 using quack_api.Objects;
@@ -15,13 +16,18 @@ namespace quack_api.Controllers
     [Route("Quack/Recommender/[action]")]
     public class RecommenderController : BaseController
     {
+        public RecommenderController(IOptions<RecommenderSettings> recommendersettingsAccessor)
+        {
+            recommenderStettings = recommendersettingsAccessor.Value;
+        }
+        private readonly RecommenderSettings recommenderStettings;
         protected IRecommenderService RecommenderService { get; set; }
 
         [HttpGet]
         public async Task<ActionResult<QuackResponse>> GetPlaylist(string accessToken, int qlt)
         {
             return await ControllerUtil.GetResponse(
-                async () => await RecommenderService.GetPlaylist(accessToken, qlt),
+                async () => await RecommenderService.GetPlaylist(recommenderStettings.RecommenderConnection,accessToken, qlt),
                 (dataResponse) => new QuackResponse<PlaylistDTO>(dataResponse.Result));
         }
     }
