@@ -1,4 +1,0 @@
-D:\ProgrammingProjects\AAU\8-semester\webservice\quack_api\quack_api.Test\obj\Debug\net5.0\quack_api.Test.GeneratedMSBuildEditorConfig.editorconfig
-D:\ProgrammingProjects\AAU\8-semester\webservice\quack_api\quack_api.Test\obj\Debug\net5.0\quack_api.Test.AssemblyInfoInputs.cache
-D:\ProgrammingProjects\AAU\8-semester\webservice\quack_api\quack_api.Test\obj\Debug\net5.0\quack_api.Test.AssemblyInfo.cs
-D:\ProgrammingProjects\AAU\8-semester\webservice\quack_api\quack_api.Test\obj\Debug\net5.0\quack_api.Test.csproj.CoreCompileInputs.cache
