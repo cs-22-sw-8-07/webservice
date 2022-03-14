@@ -15,11 +15,11 @@ namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(string recommenderConnection, string accessToken, int qlt)
+        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(string recommenderConnection, string accessToken, string location)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                string[] args = { recommenderConnection + @"\src\main.py", "test", "test2", "test3" };
+                string[] args = { recommenderConnection + @"\src\main.py", location };
                 string cmd = recommenderConnection + @"\venv\Scripts\python.exe";
 
                 ProcessStartInfo start = new ProcessStartInfo();

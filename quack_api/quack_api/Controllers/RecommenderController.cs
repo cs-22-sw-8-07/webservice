@@ -18,16 +18,17 @@ namespace quack_api.Controllers
     {
         public RecommenderController(IOptions<RecommenderSettings> recommendersettingsAccessor)
         {
-            recommenderStettings = recommendersettingsAccessor.Value;
+            recommenderSettings = recommendersettingsAccessor.Value;
+            RecommenderService = new RecommenderService();
         }
-        private readonly RecommenderSettings recommenderStettings;
+        private readonly RecommenderSettings recommenderSettings;
         protected IRecommenderService RecommenderService { get; set; }
 
         [HttpGet]
-        public async Task<ActionResult<QuackResponse>> GetPlaylist(string accessToken, int qlt)
+        public async Task<ActionResult<QuackResponse>> GetPlaylist(string accessToken, string location)
         {
             return await ControllerUtil.GetResponse(
-                async () => await RecommenderService.GetPlaylist(recommenderStettings.RecommenderConnection,accessToken, qlt),
+                async () => await RecommenderService.GetPlaylist(recommenderSettings.RecommenderConnection,accessToken, location),
                 (dataResponse) => new QuackResponse<PlaylistDTO>(dataResponse.Result));
         }
     }

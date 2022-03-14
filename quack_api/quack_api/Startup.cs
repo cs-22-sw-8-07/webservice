@@ -27,7 +27,7 @@ namespace quack_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var recommenderSettings = Configuration.GetSection("RecommenderStettings");
+            var recommenderSettings = Configuration.GetSection("RecommenderSettings");
             services.Configure<RecommenderSettings>(recommenderSettings);
 
             services.AddControllers();

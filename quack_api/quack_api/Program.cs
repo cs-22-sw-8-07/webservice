@@ -13,8 +13,8 @@ namespace quack_api
     {
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
-            Console.WriteLine("test");
+            CreateHostBuilder(args).Build().Run();
+            //Console.WriteLine("test");
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

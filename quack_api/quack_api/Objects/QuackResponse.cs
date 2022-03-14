@@ -7,7 +7,7 @@ namespace quack_api.Objects
 {
     public class QuackResponse
     {
-        public bool IsSuccessful { get; set; }
+        public bool IsSuccessful { get => ErrorNo == 0; }
         public int ErrorNo { get; set; }
         public string ErrorMessage { get; set; }
 
