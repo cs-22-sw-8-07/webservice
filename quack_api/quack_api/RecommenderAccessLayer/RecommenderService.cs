@@ -16,12 +16,12 @@ namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(string recommenderConnection, string accessToken, string location)
+        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, string location)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                string[] args = { recommenderConnection + @"\src\main.py", accessToken, location };
-                string cmd = recommenderConnection + @"\venv\Scripts\python.exe";
+                string[] args = { recommenderSettings.RecommenderPath + @"\src\main.py", accessToken, location };
+                string cmd = recommenderSettings.PythonPath;
 
                 ProcessStartInfo start = new ProcessStartInfo();
                 start.FileName = cmd;
@@ -35,7 +35,7 @@ namespace quack_api.RecommenderAccessLayer
                 {
                     process = Process.Start(start);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return new DataResponse<PlaylistDTO>((int)ResponseErrors.PathToPythonExeNotFound);
                 }
