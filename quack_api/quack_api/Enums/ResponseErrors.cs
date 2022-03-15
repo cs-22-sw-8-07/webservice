@@ -9,7 +9,7 @@ namespace quack_api.Enums
     {
         /* Response codes for categorization:
          * 0-99 - System Errors
-         * 100-199 User data Errors
+         * 100-199 Recommender-related errors
          * 200-299 Recommendation System Errors         
          */
 
@@ -18,8 +18,8 @@ namespace quack_api.Enums
         AnExceptionOccurredInTheDAL = 2,
         ChangesCouldNotBeAppliedToTheDatabase = 5,
         QuackUpdateListBadFormat = 50,
-
-        //TODO: lav error codes til recommender
+        // Recommender-related errors
+        PathToPythonExeNotFound = 100,
         
     }
 }

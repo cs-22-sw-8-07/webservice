@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using Quack.Utilities;
+using quack_api.Enums;
 
 namespace quack_api.RecommenderAccessLayer
 {
@@ -27,17 +28,25 @@ namespace quack_api.RecommenderAccessLayer
                 start.Arguments = string.Join(" ", args);
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
-                using (Process process = Process.Start(start))
+                Process process;
+                string result = "";
+
+                try
                 {
-                    string result = "";
-                    using (StreamReader reader = process.StandardOutput)
-                    {
-                        result = reader.ReadToEnd();
-                    }
-                    await process.WaitForExitAsync();
-                    var response = JsonSerializer.Deserialize<RecommenderResponse>(result);
-                    return new DataResponse<PlaylistDTO>(response.Result);
+                    process = Process.Start(start);
                 }
+                catch (Exception ex)
+                {
+                    return new DataResponse<PlaylistDTO>((int)ResponseErrors.PathToPythonExeNotFound);
+                }
+
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    result = reader.ReadToEnd();
+                }
+                await process.WaitForExitAsync();
+                var response = JsonSerializer.Deserialize<RecommenderResponse>(result);
+                return new DataResponse<PlaylistDTO>(response.Result);
             });
         }
     }

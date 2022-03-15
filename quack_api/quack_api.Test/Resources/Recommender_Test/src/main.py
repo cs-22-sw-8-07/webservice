@@ -72,7 +72,7 @@ def main(args):
     "error_no": 0
 }"""
 
-    print(test_json)
+    print(test_json)    
 
     return 0
 
