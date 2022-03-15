@@ -19,7 +19,7 @@ namespace quack_api.RecommenderAccessLayer
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                string[] args = { recommenderConnection + @"\src\main.py", location };
+                string[] args = { recommenderConnection + @"\src\main.py", accessToken, location };
                 string cmd = recommenderConnection + @"\venv\Scripts\python.exe";
 
                 ProcessStartInfo start = new ProcessStartInfo();
@@ -39,9 +39,6 @@ namespace quack_api.RecommenderAccessLayer
                     return new DataResponse<PlaylistDTO>(response.Result);
                 }
             });
-
-            
-            
         }
     }
 }
