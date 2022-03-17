@@ -11,6 +11,8 @@ using System.IO;
 using System.Text.Json;
 using Quack.Utilities;
 using quack_api.Enums;
+using quack_api.Utilities;
+using System.Text;
 
 namespace quack_api.RecommenderAccessLayer
 {
@@ -21,30 +23,17 @@ namespace quack_api.RecommenderAccessLayer
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
                 string[] args = { recommenderSettings.RecommenderPath + @"\src\main.py", accessToken, location };
-                string cmd = recommenderSettings.PythonPath;
+                string pythonPath = recommenderSettings.PythonPath;
 
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = cmd;
-                start.Arguments = string.Join(" ", args);
-                start.UseShellExecute = false;
-                start.RedirectStandardOutput = true;
-                Process process;
-                string result = "";
+                string arguments = string.Join(" ", args);
 
-                try
+                string result = string.Empty;
+
+                using (CommandLineProcess cmd = new CommandLineProcess(pythonPath, arguments))
                 {
-                    process = Process.Start(start);
-                }
-                catch (Exception)
-                {
-                    return new DataResponse<PlaylistDTO>((int)ResponseErrors.PathToPythonExeNotFound);
+                    int exitCode = cmd.Run(out result, out string processError);
                 }
 
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    result = reader.ReadToEnd();
-                }
-                await process.WaitForExitAsync();
                 var response = JsonSerializer.Deserialize<RecommenderResponse>(result);
                 return new DataResponse<PlaylistDTO>(response.Result);
             });
