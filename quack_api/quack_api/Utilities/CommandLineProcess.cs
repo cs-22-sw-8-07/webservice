@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace quack_api.Utilities
-
 {
     public sealed class CommandLineProcess : IDisposable
     {
@@ -13,7 +13,6 @@ namespace quack_api.Utilities
         public int? ExitCode { get; private set; }
 
         private Process Process;
-        private readonly object Locker = new object();
 
         public CommandLineProcess(string path, string arguments)
         {
@@ -22,44 +21,29 @@ namespace quack_api.Utilities
             Arguments = arguments;
         }
 
-        public int Run(out string output, out string err)
+        public async Task<Tuple<int, string>> Run()
         {
-            lock (Locker)
-            {
-                if (IsRunning) throw new Exception("The process is already running");
+            if (IsRunning) throw new Exception("The process is already running");
+            string output;
 
-                Process = new Process()
+            Process = new Process()
+            {
+                EnableRaisingEvents = true,
+                StartInfo = new ProcessStartInfo()
                 {
-                    EnableRaisingEvents = true,
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        FileName = Path,
-                        Arguments = Arguments,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true,
-                    },
-                };
+                    FileName = Path,
+                    Arguments = Arguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                },
+            };
 
-                if (!Process.Start()) throw new Exception("Process could not be started");
-                output = Process.StandardOutput.ReadToEnd();
-                err = Process.StandardError.ReadToEnd();
-                Process.WaitForExit();
-                try { Process.Refresh(); } catch { }
-                return (ExitCode = Process.ExitCode).Value;
-            }
-        }
-
-        public void Kill()
-        {
-            lock (Locker)
-            {
-                try { Process?.Kill(); }
-                catch { }
-                IsRunning = false;
-                Process = null;
-            }
+            if (!Process.Start()) throw new Exception("Process could not be started");
+            output = Process.StandardOutput.ReadToEnd();
+            await Process.WaitForExitAsync();
+            try { Process.Refresh(); } catch { }
+            return new ((ExitCode = Process.ExitCode).Value, output);
         }
 
         public void Dispose()

@@ -27,14 +27,17 @@ namespace quack_api.RecommenderAccessLayer
 
                 string arguments = string.Join(" ", args);
 
-                string result = string.Empty;
+                Tuple<int, string> result = new (-1, "");
 
                 using (CommandLineProcess cmd = new CommandLineProcess(pythonPath, arguments))
                 {
-                    int exitCode = cmd.Run(out result, out string processError);
+                    result = await cmd.Run();
                 }
 
-                var response = JsonSerializer.Deserialize<RecommenderResponse>(result);
+                int exitCode = result.Item1;
+                var output = result.Item2;
+
+                var response = JsonSerializer.Deserialize<RecommenderResponse>(output);
                 return new DataResponse<PlaylistDTO>(response.Result);
             });
         }
