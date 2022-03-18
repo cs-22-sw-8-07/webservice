@@ -37,3 +37,8 @@ And a file "quack_api/quack_api/appsettings.Development.json" with contents:
   }
 }
 ```
+
+Install the correct packages on Python
+```
+python -m pip install spotipy
+```
