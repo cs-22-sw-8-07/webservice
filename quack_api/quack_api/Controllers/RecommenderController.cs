@@ -28,7 +28,7 @@ namespace quack_api.Controllers
         public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, string location)
         {
             return await ControllerUtil.GetResponse(
-                async () => await RecommenderService.GetPlaylist(recommenderSettings.RecommenderConnection,accessToken, location),
+                async () => await RecommenderService.GetPlaylist(recommenderSettings, accessToken, location),
                 (dataResponse) => new QuackResponse<PlaylistDTO>(dataResponse.Result));
         }
     }

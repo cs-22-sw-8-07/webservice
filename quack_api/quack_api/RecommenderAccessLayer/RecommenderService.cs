@@ -11,41 +11,33 @@ using System.IO;
 using System.Text.Json;
 using Quack.Utilities;
 using quack_api.Enums;
+using quack_api.Utilities;
+using System.Text;
 
 namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(string recommenderConnection, string accessToken, string location)
+        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, string location)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                string[] args = { recommenderConnection + @"\src\main.py", accessToken, location };
-                string cmd = recommenderConnection + @"\venv\Scripts\python.exe";
+                string[] args = { recommenderSettings.RecommenderPath, accessToken, location };
+                string pythonPath = recommenderSettings.PythonPath;
 
-                ProcessStartInfo start = new ProcessStartInfo();
-                start.FileName = cmd;
-                start.Arguments = string.Join(" ", args);
-                start.UseShellExecute = false;
-                start.RedirectStandardOutput = true;
-                Process process;
-                string result = "";
+                string arguments = string.Join(" ", args);
 
-                try
+                Tuple<int, string> result = new (-1, "");
+
+                using (CommandLineProcess cmd = new CommandLineProcess(pythonPath, arguments))
                 {
-                    process = Process.Start(start);
-                }
-                catch (Exception ex)
-                {
-                    return new DataResponse<PlaylistDTO>((int)ResponseErrors.PathToPythonExeNotFound);
+                    result = await cmd.Run();
                 }
 
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    result = reader.ReadToEnd();
-                }
-                await process.WaitForExitAsync();
-                var response = JsonSerializer.Deserialize<RecommenderResponse>(result);
+                int exitCode = result.Item1;
+                var output = result.Item2;
+
+                var response = JsonSerializer.Deserialize<RecommenderResponse>(output);
                 return new DataResponse<PlaylistDTO>(response.Result);
             });
         }
