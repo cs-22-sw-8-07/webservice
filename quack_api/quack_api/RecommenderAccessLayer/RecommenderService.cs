@@ -22,7 +22,7 @@ namespace quack_api.RecommenderAccessLayer
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                string[] args = { recommenderSettings.RecommenderPath + @"\src\main.py", accessToken, location };
+                string[] args = { recommenderSettings.RecommenderPath, accessToken, location };
                 string pythonPath = recommenderSettings.PythonPath;
 
                 string arguments = string.Join(" ", args);
