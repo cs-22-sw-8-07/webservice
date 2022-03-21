@@ -26,7 +26,7 @@ namespace quack_api.Controllers
         protected IRecommenderService RecommenderService { get; set; }
 
         [HttpGet]
-        public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationTypes location)
+        public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationType location)
         {
             return await ControllerUtil.GetResponse(
                 async () => await RecommenderService.GetPlaylist(recommenderSettings, accessToken, location),

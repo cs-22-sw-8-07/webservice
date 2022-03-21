@@ -35,7 +35,7 @@ namespace quack_api.Test.UnitTests
             RecommenderController recommenderController = new RecommenderController(testOptions);
 
             //Act
-            var result = await recommenderController.GetPlaylist("test", "test");
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
 
             //Assert
             Assert.IsTrue(result.Value.IsSuccessful);
