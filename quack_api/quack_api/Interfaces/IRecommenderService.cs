@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using quack_api.Enums;
 
 namespace quack_api.Interfaces
 {
@@ -16,7 +17,7 @@ namespace quack_api.Interfaces
         /// <param name="accessToken">string of a spotify acces token</param>
         /// <param name="qlt">Int representation of Quack location type</param>
         /// <returns></returns>
-        public Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderStetting, string accessToken, string location);
+        public Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderStetting, string accessToken, QuackLocationTypes location);
 
     }
 }

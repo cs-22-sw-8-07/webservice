@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using quack_api.Enums;
 using quack_api.Interfaces;
 using quack_api.Models;
 using quack_api.Objects;
@@ -25,7 +26,7 @@ namespace quack_api.Controllers
         protected IRecommenderService RecommenderService { get; set; }
 
         [HttpGet]
-        public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, string location)
+        public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationTypes location)
         {
             return await ControllerUtil.GetResponse(
                 async () => await RecommenderService.GetPlaylist(recommenderSettings, accessToken, location),

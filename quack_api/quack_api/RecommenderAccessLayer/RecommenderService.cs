@@ -18,11 +18,12 @@ namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, string location)
+        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationTypes location)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                string[] args = { recommenderSettings.RecommenderPath, accessToken, location };
+                int numberLocation = (int)location;
+                string[] args = { recommenderSettings.RecommenderPath, accessToken, numberLocation.ToString() };
                 string pythonPath = recommenderSettings.PythonPath;
 
                 string arguments = string.Join(" ", args);
