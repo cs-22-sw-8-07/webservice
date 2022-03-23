@@ -18,9 +18,9 @@ namespace quack_api.Test.UnitTests
     {
         
 
-        class TestOptions : RecommenderSettings
+        private class TestOptions : RecommenderSettings
         {
-
+            
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace quack_api.Test.UnitTests
             //Arrange
             IOptions<TestOptions> testOptions = Options.Create(new TestOptions()
             {
-                RecommenderPath = @"C:\Users\hliv1\Desktop\Projects\webservice\quack_api\quack_api.Test\Resources\Recommender_Test",
+                RecommenderPath = @"C:\Users\hliv1\Desktop\Projects\webservice\quack_api\quack_api.Test\Resources\Recommender_Test\src\main.py",
                 PythonPath = @"C:\Users\hliv1\AppData\Local\Programs\Python\Python310\python.exe"
             });
             RecommenderController recommenderController = new RecommenderController(testOptions);

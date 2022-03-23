@@ -18,28 +18,28 @@ namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<DataResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
+        public async Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
-                int numberLocation = (int)location;
-                string[] args = { recommenderSettings.RecommenderPath, accessToken, numberLocation.ToString() };
+                string[] args = { recommenderSettings.RecommenderPath, accessToken, ((int)location).ToString() };
                 string pythonPath = recommenderSettings.PythonPath;
 
                 string arguments = string.Join(" ", args);
 
-                Tuple<int, string> result = new (-1, "");
-
                 using (CommandLineProcess cmd = new CommandLineProcess(pythonPath, arguments))
                 {
-                    result = await cmd.Run();
+                    // Get result from script
+                    var result = await cmd.Run();
+
+                    // Check for errors occurred in the script
+                    if (result.Item1 > 0)
+                        return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.SomethingWentWrongInTheRecommender);
+                    // Parse result from script
+                    var response = JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>(result.Item2);
+                    // Return response
+                    return new ServiceResponse<PlaylistDTO>(response.Result);
                 }
-
-                int exitCode = result.Item1;
-                var output = result.Item2;
-
-                var response = JsonSerializer.Deserialize<RecommenderResponse>(output);
-                return new DataResponse<PlaylistDTO>(response.Result);
             });
         }
     }

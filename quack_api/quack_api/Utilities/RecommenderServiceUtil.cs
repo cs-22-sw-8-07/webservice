@@ -160,7 +160,7 @@ namespace Quack.Utilities
             (
                 Func<Task<TypeDataResponse>> getDataResponseMethod
             )
-            where TypeDataResponse : DataResponse
+            where TypeDataResponse : ServiceResponse
         {
             // Nested function used for returning error response object
             TypeDataResponse getErrorResponse(int errorNo, string errorMessage)

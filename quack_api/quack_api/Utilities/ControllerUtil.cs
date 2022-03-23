@@ -23,7 +23,7 @@ namespace quack_api.Utilities
                 Func<Task<TypeDataResponse>> getDataResponseMethod, 
                 Func<TypeDataResponse, TypeQuackResponse> parseDataResponseMethod
             )
-            where TypeDataResponse : DataResponse
+            where TypeDataResponse : ServiceResponse
             where TypeQuackResponse : QuackResponse
         {
             TypeQuackResponse getErrorResponse(int errorNo, string errorMessage)

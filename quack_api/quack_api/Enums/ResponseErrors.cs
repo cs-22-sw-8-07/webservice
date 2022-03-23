@@ -9,8 +9,7 @@ namespace quack_api.Enums
     {
         /* Response codes for categorization:
          * 0-99 - System Errors
-         * 100-199 Recommender-related errors
-         * 200-299 Recommendation System Errors         
+         * 100-199 Recommender-related errors             
          */
 
         // System errors
@@ -20,6 +19,11 @@ namespace quack_api.Enums
         QuackUpdateListBadFormat = 50,
         // Recommender-related errors
         PathToPythonExeNotFound = 100,
-        
+        SomethingWentWrongInTheRecommender = 101,
+        CouldNotInitializeSpotipy = 110,
+        CouldNotFindPlaylists = 111,
+        CouldNotFindSongsFromPlaylist = 112,
+        CouldNotFormatSongListToJson = 113
+
     }
 }
