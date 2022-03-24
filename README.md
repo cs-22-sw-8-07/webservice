@@ -2,6 +2,8 @@
 
 ## Settings files
 
+The project and the test environment uses ASP.NET 6.0
+
 Add a file "quack_api/quack_api/appsettings.json" with contents:
 
 ```
