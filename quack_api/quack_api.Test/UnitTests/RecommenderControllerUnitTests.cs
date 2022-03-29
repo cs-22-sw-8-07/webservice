@@ -10,29 +10,29 @@ using quack_api.Models;
 using quack_api.Controllers;
 using Microsoft.Extensions.Options;
 using quack_api.Enums;
+using Microsoft.Extensions.Configuration;
 
 namespace quack_api.Test.UnitTests
 {
     [TestClass]
     public class RecommenderControllerUnitTests
     {
-        
-
-        private class TestOptions : RecommenderSettings
+        public static IConfiguration InitConfiguration()
         {
-            
+            var config = new ConfigurationBuilder()
+               .AddJsonFile("appsettings.test.json")
+               .Build();
+            return config;
         }
 
         [TestMethod]
         public async Task RecommenderController_GetPlaylist_Success()
         {
             //Arrange
-            IOptions<TestOptions> testOptions = Options.Create(new TestOptions()
-            {
-                RecommenderPath = @"C:\Users\hliv1\Desktop\Projects\webservice\quack_api\quack_api.Test\Resources\Recommender_Test\src\main.py",
-                PythonPath = @"C:\Users\hliv1\AppData\Local\Programs\Python\Python310\python.exe"
-            });
-            RecommenderController recommenderController = new RecommenderController(testOptions);
+            var config = InitConfiguration();
+            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var options = Options.Create(settings);
+            RecommenderController recommenderController = new RecommenderController(options);
 
             //Act
             var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
@@ -42,23 +42,23 @@ namespace quack_api.Test.UnitTests
             Assert.IsInstanceOfType(result.Value.Result, typeof(PlaylistDTO));
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public async Task RecommenderController_GetPlaylist_PathToPythonExeNotFound()
         {
             //Arrange
-            IOptions<TestOptions> testOptions = Options.Create(new TestOptions()
-            {
-                RecommenderConnection = @"C:\Users\Jeppe\Documents\P8\wrong\"
-            });
-            RecommenderController recommenderController = new RecommenderController(testOptions);
-            int errorNo = (int)ResponseErrors.PathToPythonExeNotFound;
+            var config = InitConfiguration();
+            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var options = Options.Create(settings);
+            options.Value.RecommenderPath = "Wrong_path";
+            RecommenderController recommenderController = new RecommenderController(options);
+            int errorNo = (int)ResponseErrors.SomethingWentWrongInTheRecommender;
 
             //Act
-            var result = await recommenderController.GetPlaylist("test", "test");
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
             Assert.AreEqual(result.Value.ErrorNo, errorNo);
-        }*/
+        }
     }
 }
