@@ -178,7 +178,7 @@ namespace Quack.Utilities
             catch (Exception exc)
             {
                 // Return exception
-                return getErrorResponse(((int)ResponseErrors.AnExceptionOccurredInTheDAL), exc.Message);
+                return getErrorResponse(((int)ResponseErrors.AnExceptionOccurredInTheSAL), exc.Message);
             }
         }
 
