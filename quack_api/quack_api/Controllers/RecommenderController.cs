@@ -30,7 +30,7 @@ namespace quack_api.Controllers
         {
             return await ControllerUtil.GetResponse(
                 async () => await RecommenderService.GetPlaylist(recommenderSettings, accessToken, location),
-                (dataResponse) => new QuackResponse<PlaylistDTO>(dataResponse.Result));
+                (serviceResponse) => new QuackResponse<PlaylistDTO>(serviceResponse.Result));
         }
     }
 }

@@ -9,7 +9,6 @@ namespace quack_api.Utilities
     {
         public string Path { get; }
         public string Arguments { get; }
-        public bool IsRunning { get; private set; }
         public int? ExitCode { get; private set; }
 
         private Process Process;
@@ -23,9 +22,6 @@ namespace quack_api.Utilities
 
         public async Task<Tuple<int, string>> Run()
         {
-            if (IsRunning) throw new Exception("The process is already running");
-            string output;
-
             Process = new Process()
             {
                 EnableRaisingEvents = true,
@@ -40,7 +36,7 @@ namespace quack_api.Utilities
             };
 
             if (!Process.Start()) throw new Exception("Process could not be started");
-            output = Process.StandardOutput.ReadToEnd();
+            var output = await Process.StandardOutput.ReadToEndAsync();
             await Process.WaitForExitAsync();
             try { Process.Refresh(); } catch { }
             return new ((ExitCode = Process.ExitCode).Value, output);

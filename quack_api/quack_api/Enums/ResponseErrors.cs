@@ -14,7 +14,7 @@ namespace quack_api.Enums
 
         // System errors
         AnExceptionOccurredInAController = 1,
-        AnExceptionOccurredInTheDAL = 2,
+        AnExceptionOccurredInTheSAL = 2,
         ChangesCouldNotBeAppliedToTheDatabase = 5,
         QuackUpdateListBadFormat = 50,
         // Recommender-related errors
