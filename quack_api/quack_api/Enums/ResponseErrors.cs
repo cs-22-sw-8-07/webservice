@@ -18,12 +18,17 @@ namespace quack_api.Enums
         ChangesCouldNotBeAppliedToTheDatabase = 5,
         QuackUpdateListBadFormat = 50,
         // Recommender-related errors
-        PathToPythonExeNotFound = 100,
         SomethingWentWrongInTheRecommender = 101,
+        PathNull = 102,
+        PathNotFound = 103,
+        ProcessCouldNotStart = 104,
+        RecommenderPathWrong = 105,
+        ResultFromCommandlineEmpty = 106,
         CouldNotInitializeSpotipy = 110,
         CouldNotFindPlaylists = 111,
         CouldNotFindSongsFromPlaylist = 112,
-        CouldNotFormatSongListToJson = 113
+        CouldNotFormatSongListToJson = 113,
+
 
     }
 }
