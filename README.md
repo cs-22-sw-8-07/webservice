@@ -44,3 +44,17 @@ Install the correct packages on Python
 ```
 python -m pip install spotipy
 ```
+
+## Unit test
+In order to run the unit test add file "quack_api/quack_api.Test/appsettings.test.json" with contents:
+
+```
+{
+  "RecommenderSettings": {
+    "RecommenderPath": "",
+    "PythonPath": ""
+  }
+}
+```
+Add your python to the python installation (PythonPath).
+Add the path to the python file called "main.py" under "quack_api/quack_api.Test/Resources/Test_recommender"

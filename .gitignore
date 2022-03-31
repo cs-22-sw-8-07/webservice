@@ -353,3 +353,4 @@ MigrationBackup/
 # Ignoring appsettings because they are local
 quack_api/quack_api/appsettings.json
 quack_api/quack_api/appsettings.Development.json
+quack_api/quack_api.Test/appsettings.test.json
