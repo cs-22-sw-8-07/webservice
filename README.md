@@ -57,4 +57,4 @@ In order to run the unit test add file "quack_api/quack_api.Test/appsettings.tes
 }
 ```
 Add your python to the python installation (PythonPath).
-Add the path to the python file called "main.py" under "quack_api/quack_api.Test/Resources/Test_recommender"
+Add the path to the python file called "main.py" under "quack_api/quack_api.Test/Resources/TestRecommender"

@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace quack_api.Utilities
 { 
-    public class PythonPathNotFoundException : Exception
+    public class PathNotFoundException : Exception
     {
-        public PythonPathNotFoundException() { }
+        public PathNotFoundException() { }
     }
-    public class PythonPathNullException : Exception
+    public class PathNullException : Exception
     {
-        public PythonPathNullException() { }
+        public PathNullException() { }
     }
     public class ProcessCouldNotStartException : Exception
     {
@@ -28,8 +28,8 @@ namespace quack_api.Utilities
 
         public CommandLineProcess(string path, string arguments)
         {
-            Path = path ?? throw new PythonPathNullException();
-            if (!File.Exists(path)) throw new PythonPathNotFoundException();
+            Path = path ?? throw new PathNullException();
+            if (!File.Exists(path)) throw new PathNotFoundException();
             Arguments = arguments;
         }
 

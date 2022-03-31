@@ -11,6 +11,7 @@ using quack_api.Models;
 using quack_api.Controllers;
 using Microsoft.Extensions.Options;
 using quack_api.Enums;
+using quack_api.Test.Utilities;
 using Microsoft.Extensions.Configuration;
 
 namespace quack_api.Test.UnitTests
@@ -18,13 +19,7 @@ namespace quack_api.Test.UnitTests
     [TestClass]
     public class RecommenderControllerUnitTests
     {
-        public static IConfiguration InitConfiguration()
-        {
-            var config = new ConfigurationBuilder()
-               .AddJsonFile("appsettings.test.json")
-               .Build();
-            return config;
-        }
+        IConfiguration Configuration { get; set; }
 
         public string ChangeFilenameInPath(string path, string filename)
         {
@@ -34,12 +29,19 @@ namespace quack_api.Test.UnitTests
             return Path.Combine(path, filename);
         }
 
+        [TestInitialize]
+        public void Setup()
+        {
+            // Runs before each test.
+            Configuration = GeneralUtil.InitConfiguration();
+
+        }
+
         [TestMethod]
         public async Task RecommenderController_GetPlaylist_Success()
         {
             //Arrange
-            var config = InitConfiguration();
-            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var settings = Configuration.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             RecommenderController recommenderController = new RecommenderController(options);
 
@@ -55,8 +57,7 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_WrongRecommenderPath_RecommenderPathWrong()
         {
             //Arrange
-            var config = InitConfiguration();
-            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var settings = Configuration.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             options.Value.RecommenderPath = "Wrong_path";
             RecommenderController recommenderController = new RecommenderController(options);
@@ -74,12 +75,11 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_WrongPythonPath_PythonPathNotFound()
         {
             //Arrange
-            var config = InitConfiguration();
-            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var settings = Configuration.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             options.Value.PythonPath = "Wrong_path";
             RecommenderController recommenderController = new RecommenderController(options);
-            int errorNo = (int)ResponseErrors.PythonPathNotFound;
+            int errorNo = (int)ResponseErrors.PathNotFound;
 
             //Act
             var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
@@ -93,12 +93,11 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_NullPythonPath_PythonPathNull()
         {
             //Arrange
-            var config = InitConfiguration();
-            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var settings = Configuration.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             options.Value.PythonPath = null;
             RecommenderController recommenderController = new RecommenderController(options);
-            int errorNo = (int)ResponseErrors.PythonPathNull;
+            int errorNo = (int)ResponseErrors.PathNull;
 
             //Act
             var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
@@ -112,8 +111,7 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_PythonScriptReturnsAnEmptyString_ResultFromCommandlineEmpty()
         {
             //Arrange
-            var config = InitConfiguration();
-            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var settings = Configuration.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             options.Value.RecommenderPath = ChangeFilenameInPath(options.Value.RecommenderPath, "mainEmpty.py");
             RecommenderController recommenderController = new RecommenderController(options);
@@ -131,8 +129,7 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_PythonScriptReturnsAnExitCode_SomethingWentWrongInTheRecommender()
         {
             //Arrange
-            var config = InitConfiguration();
-            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var settings = Configuration.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             options.Value.RecommenderPath = ChangeFilenameInPath(options.Value.RecommenderPath, "mainExitcode2.py");
             RecommenderController recommenderController = new RecommenderController(options);

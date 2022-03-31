@@ -176,13 +176,13 @@ namespace Quack.Utilities
             {
                 return await getDataResponseMethod();
             }
-            catch (PythonPathNullException exc)
+            catch (PathNullException exc)
             {
-                return getErrorResponse((int)ResponseErrors.PythonPathNull, exc.Message);
+                return getErrorResponse((int)ResponseErrors.PathNull, exc.Message);
             }
-            catch (PythonPathNotFoundException exc)
+            catch (PathNotFoundException exc)
             {
-                return getErrorResponse((int)ResponseErrors.PythonPathNotFound, exc.Message);
+                return getErrorResponse((int)ResponseErrors.PathNotFound, exc.Message);
             }
             catch (ProcessCouldNotStartException exc)
             {

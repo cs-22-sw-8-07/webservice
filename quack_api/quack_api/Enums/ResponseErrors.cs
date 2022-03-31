@@ -19,8 +19,8 @@ namespace quack_api.Enums
         QuackUpdateListBadFormat = 50,
         // Recommender-related errors
         SomethingWentWrongInTheRecommender = 101,
-        PythonPathNull = 102,
-        PythonPathNotFound = 103,
+        PathNull = 102,
+        PathNotFound = 103,
         ProcessCouldNotStart = 104,
         RecommenderPathWrong = 105,
         ResultFromCommandlineEmpty = 106,
