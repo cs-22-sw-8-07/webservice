@@ -12,7 +12,7 @@ using System.Net.Http;
 
 namespace quack_api.Test.IntegrationTests
 {
-    [TestClass]
+    //[TestClass]
     public class IntegrationTests
     {
         /// <summary>

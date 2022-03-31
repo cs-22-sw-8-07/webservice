@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.IO;
 using System.Threading.Tasks;
 using quack_api.Models;
 using quack_api.Controllers;
@@ -25,6 +26,14 @@ namespace quack_api.Test.UnitTests
             return config;
         }
 
+        public string ChangeFilenameInPath(string path, string filename)
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(path);
+            path = directoryInfo.Parent.FullName;
+
+            return Path.Combine(path, filename);
+        }
+
         [TestMethod]
         public async Task RecommenderController_GetPlaylist_Success()
         {
@@ -43,13 +52,89 @@ namespace quack_api.Test.UnitTests
         }
 
         [TestMethod]
-        public async Task RecommenderController_GetPlaylist_PathToPythonExeNotFound()
+        public async Task RecommenderController_GetPlaylist_WrongRecommenderPath_RecommenderPathWrong()
         {
             //Arrange
             var config = InitConfiguration();
             var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
             var options = Options.Create(settings);
             options.Value.RecommenderPath = "Wrong_path";
+            RecommenderController recommenderController = new RecommenderController(options);
+            int errorNo = (int)ResponseErrors.RecommenderPathWrong;
+
+            //Act
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
+
+            //Assert
+            Assert.IsFalse(result.Value.IsSuccessful);
+            Assert.AreEqual(result.Value.ErrorNo, errorNo);
+        }
+
+        [TestMethod]
+        public async Task RecommenderController_GetPlaylist_WrongPythonPath_PythonPathNotFound()
+        {
+            //Arrange
+            var config = InitConfiguration();
+            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var options = Options.Create(settings);
+            options.Value.PythonPath = "Wrong_path";
+            RecommenderController recommenderController = new RecommenderController(options);
+            int errorNo = (int)ResponseErrors.PythonPathNotFound;
+
+            //Act
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
+
+            //Assert
+            Assert.IsFalse(result.Value.IsSuccessful);
+            Assert.AreEqual(result.Value.ErrorNo, errorNo);
+        }
+
+        [TestMethod]
+        public async Task RecommenderController_GetPlaylist_NullPythonPath_PythonPathNull()
+        {
+            //Arrange
+            var config = InitConfiguration();
+            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var options = Options.Create(settings);
+            options.Value.PythonPath = null;
+            RecommenderController recommenderController = new RecommenderController(options);
+            int errorNo = (int)ResponseErrors.PythonPathNull;
+
+            //Act
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
+
+            //Assert
+            Assert.IsFalse(result.Value.IsSuccessful);
+            Assert.AreEqual(result.Value.ErrorNo, errorNo);
+        }
+
+        [TestMethod]
+        public async Task RecommenderController_GetPlaylist_PythonScriptReturnsAnEmptyString_ResultFromCommandlineEmpty()
+        {
+            //Arrange
+            var config = InitConfiguration();
+            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var options = Options.Create(settings);
+            options.Value.RecommenderPath = ChangeFilenameInPath(options.Value.RecommenderPath, "mainEmpty.py");
+            RecommenderController recommenderController = new RecommenderController(options);
+            int errorNo = (int)ResponseErrors.ResultFromCommandlineEmpty;
+
+            //Act
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.unknown);
+
+            //Assert
+            Assert.IsFalse(result.Value.IsSuccessful);
+            Assert.AreEqual(result.Value.ErrorNo, errorNo);
+        }
+
+        [TestMethod]
+        public async Task RecommenderController_GetPlaylist_PythonScriptReturnsAnExitCode_SomethingWentWrongInTheRecommender()
+        {
+            //Arrange
+            var config = InitConfiguration();
+            var settings = config.GetSection("RecommenderSettings").Get<RecommenderSettings>();
+            var options = Options.Create(settings);
+            options.Value.RecommenderPath = ChangeFilenameInPath(options.Value.RecommenderPath, "mainExitcode2.py");
             RecommenderController recommenderController = new RecommenderController(options);
             int errorNo = (int)ResponseErrors.SomethingWentWrongInTheRecommender;
 

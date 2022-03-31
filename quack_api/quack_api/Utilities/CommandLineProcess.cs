@@ -4,7 +4,20 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace quack_api.Utilities
-{
+{ 
+    public class PythonPathNotFoundException : Exception
+    {
+        public PythonPathNotFoundException() { }
+    }
+    public class PythonPathNullException : Exception
+    {
+        public PythonPathNullException() { }
+    }
+    public class ProcessCouldNotStartException : Exception
+    {
+        public ProcessCouldNotStartException() { }
+    }
+
     public sealed class CommandLineProcess : IDisposable
     {
         public string Path { get; }
@@ -15,8 +28,8 @@ namespace quack_api.Utilities
 
         public CommandLineProcess(string path, string arguments)
         {
-            Path = path ?? throw new ArgumentNullException(nameof(path));
-            if (!File.Exists(path)) throw new ArgumentException($"Executable not found: {path}");
+            Path = path ?? throw new PythonPathNullException();
+            if (!File.Exists(path)) throw new PythonPathNotFoundException();
             Arguments = arguments;
         }
 
@@ -35,7 +48,7 @@ namespace quack_api.Utilities
                 },
             };
 
-            if (!Process.Start()) throw new Exception("Process could not be started");
+            if (!Process.Start()) throw new ProcessCouldNotStartException();
             var output = await Process.StandardOutput.ReadToEndAsync();
             await Process.WaitForExitAsync();
             try { Process.Refresh(); } catch { }

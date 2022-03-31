@@ -10,6 +10,7 @@ using quack_api.Enums;
 using quack_api.Models;
 using quack_api.Objects;
 using Quack.Objects;
+using quack_api.Utilities;
 
 namespace Quack.Utilities
 {
@@ -174,6 +175,18 @@ namespace Quack.Utilities
             try
             {
                 return await getDataResponseMethod();
+            }
+            catch (PythonPathNullException exc)
+            {
+                return getErrorResponse((int)ResponseErrors.PythonPathNull, exc.Message);
+            }
+            catch (PythonPathNotFoundException exc)
+            {
+                return getErrorResponse((int)ResponseErrors.PythonPathNotFound, exc.Message);
+            }
+            catch (ProcessCouldNotStartException exc)
+            {
+                return getErrorResponse((int)ResponseErrors.ProcessCouldNotStart, exc.Message);
             }
             catch (Exception exc)
             {
