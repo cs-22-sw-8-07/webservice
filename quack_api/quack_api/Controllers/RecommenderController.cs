@@ -17,19 +17,21 @@ namespace quack_api.Controllers
     [Route("Quack/Recommender/[action]")]
     public class RecommenderController : BaseController
     {
-        public RecommenderController(IOptions<RecommenderSettings> recommendersettingsAccessor)
+        public RecommenderController(IOptions<RecommenderSettings> recommendersettingsAccessor, IRecommenderService recommenderService)
         {
-            recommenderSettings = recommendersettingsAccessor.Value;
-            RecommenderService = new RecommenderService();
+            Options = recommendersettingsAccessor;
+            RecommenderSettings = recommendersettingsAccessor.Value;
+            RecommenderService = recommenderService;
         }
-        private readonly RecommenderSettings recommenderSettings;
+        public IOptions<RecommenderSettings> Options { get; set; }
+        public RecommenderSettings RecommenderSettings { get; set; }
         protected IRecommenderService RecommenderService { get; set; }
 
         [HttpGet]
         public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationType location)
         {
             return await ControllerUtil.GetResponse(
-                async () => await RecommenderService.GetPlaylist(recommenderSettings, accessToken, location),
+                async () => await RecommenderService.GetPlaylist(RecommenderSettings, accessToken, location),
                 (serviceResponse) => new QuackResponse<PlaylistDTO>(serviceResponse.Result));
         }
     }
