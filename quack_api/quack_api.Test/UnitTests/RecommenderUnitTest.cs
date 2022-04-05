@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using quack_api.Test.Mocks;
 using quack_api.Controllers;
 using quack_api.Models;
+using quack_api.Enums;
 using Microsoft.Extensions.Options;
 
 namespace quack_api.Test.UnitTests
@@ -17,21 +18,20 @@ namespace quack_api.Test.UnitTests
     [TestClass]
     public class RecommenderUnitTests
     {
-        [TestInitialize]
-        public void Setup()
-        {
-            // Runs before each test.
-        }
-
         [TestMethod]
         [TestCategory(nameof(RecommenderService.GetPlaylist))]
-        public async Task UTEST()
+        public async Task RecommenderController_GetPlaylist_Success()
         {
-
+            //Arrange
             var options = Options.Create(new RecommenderSettings());
             RecommenderController recommenderController = new RecommenderController(options, new MockRecommenderService());
-            var response = await recommenderController.GetPlaylist("x", Enums.QuackLocationType.beach);
-            Assert.IsNotNull(response);
+
+            //Act
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.beach);
+
+            //Assert
+            Assert.IsTrue(result.Value.IsSuccessful);
+            Assert.IsInstanceOfType(result.Value.Result, typeof(PlaylistDTO));
         }
     }
 }

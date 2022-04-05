@@ -18,7 +18,7 @@ using quack_api.Interfaces;
 namespace quack_api.Test.UnitTests
 {
     [TestClass]
-    public class RecommenderCntIntegrationTest
+    public class RecommenderIntegrationTest
     {
         IConfiguration Configuration { get; set; }
         RecommenderController RecommenderController { get; set; }

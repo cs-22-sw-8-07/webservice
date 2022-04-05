@@ -16,17 +16,16 @@ namespace quack_api.Test.Mocks
 {
     public class MockRecommenderService : IRecommenderService
     {
-        public string LoadJson(string asset)
+        public static string LoadJson(string asset)
         {
-            using (StreamReader r = new StreamReader(asset))
+            using (StreamReader r = new(asset))
             {
-                string json = r.ReadToEnd();
-                return json;
+                return r.ReadToEnd();
             }
         }
         public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
         {
-            var response = JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>("quack_api.Test/Mocks/RecommenderMockResponse.json");
+            var response = JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>(LoadJson("RecommenderMockResponse.json"));
             return Task.FromResult(new ServiceResponse<PlaylistDTO>(response.Result));
         }
     }
