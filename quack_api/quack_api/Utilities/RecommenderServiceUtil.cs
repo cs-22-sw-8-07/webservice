@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using quack_api.Enums;
 using quack_api.Models;
 using quack_api.Objects;
-using Quack.Objects;
 using quack_api.Utilities;
 
 namespace Quack.Utilities
@@ -22,23 +21,23 @@ namespace Quack.Utilities
         /// <param name="propertyInfos">Array of PropertyInfo objects</param>
         /// <param name="propertyName">Property name as a string</param>
         /// <returns></returns>
-        private static PropertyInfo GetPropertyInfo(PropertyInfo[] propertyInfos, string propertyName, bool useJsonPropertyName = false)
-        {
-            PropertyInfo propertyInfo = null;
-            if (useJsonPropertyName)
-            {
-                // Get PropertyInfo from JSON property name first
-                propertyInfo = propertyInfos.FirstOrDefault(x =>
-                {
-                    var attribute = x.GetCustomAttributes<JsonPropertyNameAttribute>().FirstOrDefault();
-                    return attribute != null && attribute.Name == propertyName;
-                });
-            }
-            // If no match with JSON property name then check property name
-            if (propertyInfo == null)
-                propertyInfo = propertyInfos.FirstOrDefault(x => x.Name == propertyName);
-            return propertyInfo;
-        }
+        //private static PropertyInfo GetPropertyInfo(PropertyInfo[] propertyInfos, string propertyName, bool useJsonPropertyName = false)
+        //{
+        //    PropertyInfo propertyInfo = null;
+        //    if (useJsonPropertyName)
+        //    {
+        //        // Get PropertyInfo from JSON property name first
+        //        propertyInfo = propertyInfos.FirstOrDefault(x =>
+        //        {
+        //            var attribute = x.GetCustomAttributes<JsonPropertyNameAttribute>().FirstOrDefault();
+        //            return attribute != null && attribute.Name == propertyName;
+        //        });
+        //    }
+        //    // If no match with JSON property name then check property name
+        //    if (propertyInfo == null)
+        //        propertyInfo = propertyInfos.FirstOrDefault(x => x.Name == propertyName);
+        //    return propertyInfo;
+        //}
 
         /// <summary>
         /// Method used to update all property values in a target object by the ones given in a source object
@@ -47,24 +46,24 @@ namespace Quack.Utilities
         /// <typeparam name="Target">Target object's type</typeparam>
         /// <param name="sourceObj">Source object</param>
         /// <param name="targetObj">Target object</param>
-        public static void UpdateProperties<Source, Target>(Source sourceObj, Target targetObj)
-        {
-            // Get PropertyInfo objects from the source object's type
-            var sourceObjPropertyInfos = typeof(Source).GetProperties();
-            // Get PropertyInfo objects from the target object's type
-            var targetObjPropertyInfos = typeof(Target).GetProperties();
-            // Go through the source object's PropertyInfo objects
-            foreach (var sourceObjPropertyInfo in sourceObjPropertyInfos)
-            {
-                // Get property info from target object's type
-                var targetObjPropertyInfo = GetPropertyInfo(targetObjPropertyInfos, sourceObjPropertyInfo.Name);
-                // Continue if property does not exist in target object
-                if (targetObjPropertyInfo == null)
-                    continue;
-                // Set property
-                targetObjPropertyInfo.SetValue(targetObj, sourceObjPropertyInfo.GetValue(sourceObj));
-            }
-        }  
+        //public static void UpdateProperties<Source, Target>(Source sourceObj, Target targetObj)
+        //{
+        //    // Get PropertyInfo objects from the source object's type
+        //    var sourceObjPropertyInfos = typeof(Source).GetProperties();
+        //    // Get PropertyInfo objects from the target object's type
+        //    var targetObjPropertyInfos = typeof(Target).GetProperties();
+        //    // Go through the source object's PropertyInfo objects
+        //    foreach (var sourceObjPropertyInfo in sourceObjPropertyInfos)
+        //    {
+        //        // Get property info from target object's type
+        //        var targetObjPropertyInfo = GetPropertyInfo(targetObjPropertyInfos, sourceObjPropertyInfo.Name);
+        //        // Continue if property does not exist in target object
+        //        if (targetObjPropertyInfo == null)
+        //            continue;
+        //        // Set property
+        //        targetObjPropertyInfo.SetValue(targetObj, sourceObjPropertyInfo.GetValue(sourceObj));
+        //    }
+        //}  
 
         /// <summary>
         /// Method used to update a property value in an update function in the DataService
@@ -75,44 +74,44 @@ namespace Quack.Utilities
         /// <param name="sourceValue">New value for the property</param>
         /// <param name="targetPropertyName">Property to be updated</param>
         /// <param name="targetObj">Target object</param>
-        public static void UpdateProperty<Target>(object sourceValue, string targetPropertyName, Target targetObj)
-        {
-            // If Null is given return
-            if (targetPropertyName == null)
-                return;
-            // Get PropertyInfo objects from the target object's type
-            var targetObjPropertyInfos = typeof(Target).GetProperties();
-            // Get PropertyInfo object with the given property name
-            var targetObjPropertyInfo = GetPropertyInfo(targetObjPropertyInfos, targetPropertyName, useJsonPropertyName: true);
-            // Check if PropertyInfo is null 
-            if (targetObjPropertyInfo == null)
-                return;
-            object value = sourceValue;
-            // If source value is a JSON element, convert it to
-            // the property type defined in the PropertyInfo
-            if (sourceValue is JsonElement)
-            {                
-                if (((JsonElement)sourceValue).ValueKind == JsonValueKind.String && targetObjPropertyInfo.PropertyType == typeof(string))
-                {
-                    value = sourceValue.ToString();
-                }
-                else
-                {
-                    value = JsonSerializer.Deserialize
-                        (
-                            sourceValue.ToString(),
-                            targetObjPropertyInfo.PropertyType
-                        );
-                }
-            }
-            else if (value is string)
-            {
-                TypeConverter typeConverter = TypeDescriptor.GetConverter(targetObjPropertyInfo.PropertyType);
-                value = typeConverter.ConvertFromString(value.ToString());                
-            }
-            // Set property
-            targetObjPropertyInfo.SetValue(targetObj, value);            
-        }
+        //public static void UpdateProperty<Target>(object sourceValue, string targetPropertyName, Target targetObj)
+        //{
+        //    // If Null is given return
+        //    if (targetPropertyName == null)
+        //        return;
+        //    // Get PropertyInfo objects from the target object's type
+        //    var targetObjPropertyInfos = typeof(Target).GetProperties();
+        //    // Get PropertyInfo object with the given property name
+        //    var targetObjPropertyInfo = GetPropertyInfo(targetObjPropertyInfos, targetPropertyName, useJsonPropertyName: true);
+        //    // Check if PropertyInfo is null 
+        //    if (targetObjPropertyInfo == null)
+        //        return;
+        //    object value = sourceValue;
+        //    // If source value is a JSON element, convert it to
+        //    // the property type defined in the PropertyInfo
+        //    if (sourceValue is JsonElement)
+        //    {                
+        //        if (((JsonElement)sourceValue).ValueKind == JsonValueKind.String && targetObjPropertyInfo.PropertyType == typeof(string))
+        //        {
+        //            value = sourceValue.ToString();
+        //        }
+        //        else
+        //        {
+        //            value = JsonSerializer.Deserialize
+        //                (
+        //                    sourceValue.ToString(),
+        //                    targetObjPropertyInfo.PropertyType
+        //                );
+        //        }
+        //    }
+        //    else if (value is string)
+        //    {
+        //        TypeConverter typeConverter = TypeDescriptor.GetConverter(targetObjPropertyInfo.PropertyType);
+        //        value = typeConverter.ConvertFromString(value.ToString());                
+        //    }
+        //    // Set property
+        //    targetObjPropertyInfo.SetValue(targetObj, value);            
+        //}
 
         /// <summary>
         /// Method used to create dataresponse
@@ -201,18 +200,18 @@ namespace Quack.Utilities
         /// <param name="input">List of QuackUpdate objects</param>
         /// <param name="allowedProperties">List of allowed properties that can be updated</param>
         /// <returns></returns>
-        public static bool CheckQuackUpdateList(List<QuackUpdate> input, IEnumerable<string> allowedProperties)
-        {
-            // If input contains duplicates disallow it
-            if (input.Distinct().Count() != input.Count)
-                return false;
-            // If a property given in the input is not present
-            // in the allowed properties list disallow it            
-            if (input.Any(x => !allowedProperties.Contains(x.Name)))
-                return false;
-            // Input is allowed
-            return true;
-        }
+        //public static bool CheckQuackUpdateList(List<QuackUpdate> input, IEnumerable<string> allowedProperties)
+        //{
+        //    // If input contains duplicates disallow it
+        //    if (input.Distinct().Count() != input.Count)
+        //        return false;
+        //    // If a property given in the input is not present
+        //    // in the allowed properties list disallow it            
+        //    if (input.Any(x => !allowedProperties.Contains(x.Name)))
+        //        return false;
+        //    // Input is allowed
+        //    return true;
+        //}
 
     }
 }
