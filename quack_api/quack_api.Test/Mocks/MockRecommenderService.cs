@@ -10,6 +10,8 @@ using quack_api.Models;
 using quack_api.Interfaces;
 using quack_api.Objects;
 using quack_api.Test.Mocks;
+using Quack.Utilities;
+using quack_api.Utilities;
 
 namespace quack_api.Test.Mocks
 {
@@ -24,6 +26,14 @@ namespace quack_api.Test.Mocks
         }
         public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
         {
+            if (accessToken == "processCouldNotStart")
+            {
+                return RecommenderServiceUtil.GetResponse<ServiceResponse<PlaylistDTO>>(() =>
+                {
+                    throw new ProcessCouldNotStartException();
+                });
+            }
+
             var response = JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>(LoadJson("RecommenderMockResponse.json"));
             return Task.FromResult(new ServiceResponse<PlaylistDTO>(response.Result));
         }
