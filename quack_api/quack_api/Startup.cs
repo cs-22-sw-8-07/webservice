@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using quack_api.Interfaces;
 using quack_api.Models;
+using quack_api.RecommenderAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,11 @@ namespace quack_api
         {
             var recommenderSettings = Configuration.GetSection("RecommenderSettings");
             services.Configure<RecommenderSettings>(recommenderSettings);
+
+            services.AddScoped<IRecommenderService>(sp =>
+            {
+                return new RecommenderService();
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
