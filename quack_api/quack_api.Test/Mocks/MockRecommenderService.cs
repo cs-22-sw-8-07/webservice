@@ -26,12 +26,25 @@ namespace quack_api.Test.Mocks
         }
         public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
         {
-            if (accessToken == "processCouldNotStart")
+            if (accessToken == "ProcessCouldNotStart")
             {
                 return RecommenderServiceUtil.GetResponse<ServiceResponse<PlaylistDTO>>(() =>
                 {
                     throw new ProcessCouldNotStartException();
                 });
+            }
+
+            if (accessToken == "AnExceptionOccurredInTheSAL")
+            {
+                return RecommenderServiceUtil.GetResponse<ServiceResponse<PlaylistDTO>>(() =>
+                {
+                    throw new Exception();
+                });
+            }
+
+            if (accessToken == "AnExceptionOccurredInAController")
+            {
+                throw new Exception();
             }
 
             var response = JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>(LoadJson("RecommenderMockResponse.json"));

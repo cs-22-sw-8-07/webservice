@@ -15,7 +15,7 @@ using quack_api.Test.Utilities;
 using Microsoft.Extensions.Configuration;
 using quack_api.Interfaces;
 
-namespace quack_api.Test.UnitTests
+namespace quack_api.Test.IntegrationTests
 {
     [TestClass]
     public class RecommenderIntegrationTest
@@ -57,7 +57,7 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_WrongRecommenderPath_RecommenderPathWrong()
         {
             //Arrange
-            RecommenderController.Options.Value.RecommenderPath = "Wrong_path";             
+            RecommenderController.Options.Value.RecommenderPath = "Wrong_path";
             int errorNo = (int)ResponseErrors.RecommenderPathWrong;
 
             //Act
@@ -102,7 +102,7 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_PythonScriptReturnsAnEmptyString_ResultFromCommandlineEmpty()
         {
             //Arrange
-            RecommenderController.Options.Value.RecommenderPath = ChangeFilenameInPath(RecommenderController.Options.Value.RecommenderPath, "mainEmpty.py");            
+            RecommenderController.Options.Value.RecommenderPath = ChangeFilenameInPath(RecommenderController.Options.Value.RecommenderPath, "mainEmpty.py");
             int errorNo = (int)ResponseErrors.ResultFromCommandlineEmpty;
 
             //Act
@@ -117,7 +117,7 @@ namespace quack_api.Test.UnitTests
         public async Task RecommenderController_GetPlaylist_PythonScriptReturnsAnExitCode_SomethingWentWrongInTheRecommender()
         {
             //Arrange
-            RecommenderController.Options.Value.RecommenderPath = ChangeFilenameInPath(RecommenderController.Options.Value.RecommenderPath, "mainExitcode2.py");            
+            RecommenderController.Options.Value.RecommenderPath = ChangeFilenameInPath(RecommenderController.Options.Value.RecommenderPath, "mainExitcode2.py");
             int errorNo = (int)ResponseErrors.SomethingWentWrongInTheRecommender;
 
             //Act
