@@ -27,7 +27,7 @@ namespace quack_api.RecommenderAccessLayer
                     return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.RecommenderPathWrong);
 
                 // Setting up arguments for Commandline Proccess
-                string[] args = { recommenderSettings.RecommenderPath, accessToken, ((int)location).ToString() };
+                string[] args = { recommenderSettings.RecommenderPath, accessToken, ((int)location).ToString(), recommenderSettings.RecommenderType };
                 string pythonPath = recommenderSettings.PythonPath;
 
                 string arguments = string.Join(" ", args);
@@ -45,10 +45,8 @@ namespace quack_api.RecommenderAccessLayer
                     if ((result.Item2.Trim() == string.Empty) || (result.Item2 == null))
                         return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.ResultFromCommandlineEmpty);
 
-                    // Parse result from script
-                    var response = JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>(result.Item2);
-                    // Return response
-                    return new ServiceResponse<PlaylistDTO>(response.Result);
+                    // Parse result from script and return response
+                    return JsonSerializer.Deserialize<ServiceResponse<PlaylistDTO>>(result.Item2);
                 }
             });
         }
