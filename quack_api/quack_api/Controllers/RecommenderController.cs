@@ -28,10 +28,15 @@ namespace quack_api.Controllers
         protected IRecommenderService RecommenderService { get; set; }
 
         [HttpGet]
-        public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationType location)
+        public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationType location, int amount, int offset)
         {
             return await ControllerUtil.GetResponse(
-                async () => await RecommenderService.GetPlaylist(RecommenderSettings, accessToken, location),
+                async () => await RecommenderService.GetPlaylist(
+                    RecommenderSettings, 
+                    accessToken, 
+                    location,
+                    amount,
+                    offset),
                 (serviceResponse) => new QuackResponse<PlaylistDTO>(serviceResponse.Result));
         }
     }
