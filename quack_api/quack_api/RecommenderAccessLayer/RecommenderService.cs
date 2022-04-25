@@ -26,6 +26,7 @@ namespace quack_api.RecommenderAccessLayer
                 if (!File.Exists(recommenderSettings.RecommenderPath))
                     return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.RecommenderPathWrong);
 
+                // Setting up arguments for Commandline Proccess
                 string pythonPath = recommenderSettings.PythonPath;
                 string[] args = { 
                     recommenderSettings.RecommenderPath, 
