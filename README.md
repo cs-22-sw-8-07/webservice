@@ -17,14 +17,15 @@ Add a file "quack_api/quack_api/appsettings.json" with contents:
   },
   "RecommenderSettings": {
     "RecommenderPath": "",
-    "PythonPath": ""
+    "PythonPath": "",
+    "RecommenderType": ""
   },
   "AllowedHosts": "*"
 }
 ```
 
 Add your path to the recommender_system repository (RecommenderPath) and python installation (PythonPath).
-
+Add the chosen RecommenderType such as "range" or "distance".
 
 And a file "quack_api/quack_api/appsettings.Development.json" with contents:
 
