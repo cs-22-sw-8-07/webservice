@@ -18,7 +18,7 @@ namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location, int amount, int offset)
+        public async Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location, int[] previousOffsets)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
@@ -31,9 +31,8 @@ namespace quack_api.RecommenderAccessLayer
                 string[] args = { 
                     recommenderSettings.RecommenderPath, 
                     accessToken, 
-                    ((int)location).ToString(), 
-                    amount.ToString(), 
-                    offset.ToString()};
+                    ((int)location).ToString(),
+                    string.Join(";",previousOffsets)};
 
                 string arguments = string.Join(" ", args);
 
