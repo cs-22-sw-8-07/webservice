@@ -13,8 +13,10 @@ namespace quack_api.Models
         [JsonPropertyName("id")]
         public string Id { get; set; }
         [JsonPropertyName("location_type")]
-        public string LocationType { get; set; }
+        public int LocationType { get; set; }
         [JsonPropertyName("tracks")]
         public virtual ICollection<TrackDTO> Tracks { get; set; }
+        [JsonPropertyName("offset")]
+        public int Offset { get; set; }
     }
 }

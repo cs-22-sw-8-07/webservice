@@ -27,7 +27,7 @@ namespace quack_api.Controllers
         public RecommenderSettings RecommenderSettings { get; set; }
         protected IRecommenderService RecommenderService { get; set; }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult<QuackResponse<PlaylistDTO>>> GetPlaylist(string accessToken, QuackLocationType location, int[] previousOffsets)
         {
             return await ControllerUtil.GetResponse(
