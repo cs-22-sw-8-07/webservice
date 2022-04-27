@@ -44,15 +44,6 @@ namespace quack_api.Test.IntegrationTests
             using (var server = GetTestServer())
             using (var client = server.CreateClient())
             {
-
-                /*var citizen = new CitizenSignUpInputDTO
-                {
-                    Email = "email@email.dk",
-                    PhoneNo = null,
-                    Name = "test",
-                    MunicipalityId = 2
-                };
-                */
                 int[] offset = new int[] { 1, 2, 3 };
                 JsonContent jsonContent = JsonContent.Create(offset);
 
