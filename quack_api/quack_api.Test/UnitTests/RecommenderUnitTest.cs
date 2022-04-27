@@ -33,7 +33,7 @@ namespace quack_api.Test.UnitTests
             Assert.IsTrue(result.Value.IsSuccessful);
             Assert.IsInstanceOfType(result.Value.Result, typeof(PlaylistDTO));
             Assert.AreEqual("placeholder", result.Value.Result.Id);
-            Assert.AreEqual("placeholder", result.Value.Result.LocationType);
+            Assert.AreEqual(1, result.Value.Result.LocationType);
         }
 
         [TestMethod]
