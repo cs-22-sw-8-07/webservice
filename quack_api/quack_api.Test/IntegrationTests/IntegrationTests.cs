@@ -44,7 +44,7 @@ namespace quack_api.Test.IntegrationTests
             using (var client = server.CreateClient())
             {
                 // Act
-                HttpResponseMessage responseMessage = await client.GetAsync("/Quack/Recommender/GetPlaylist?accessToken=test&location=0");
+                HttpResponseMessage responseMessage = await client.GetAsync("/Quack/Recommender/GetPlaylist?accessToken=test&location=0&previousOffsets=[]");
                 string content = await responseMessage.Content.ReadAsStringAsync();
 
                 // Assert
