@@ -20,7 +20,7 @@ namespace quack_api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("https://0.0.0.0:5001").UseStartup<Startup>();
+                    webBuilder.UseUrls("https://0.0.0.0:5001", "http://0.0.0.0:5000").UseStartup<Startup>();
                 });
     }
 }
