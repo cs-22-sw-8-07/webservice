@@ -18,7 +18,7 @@ namespace quack_api.RecommenderAccessLayer
 {
     public class RecommenderService : IRecommenderService
     {
-        public async Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
+        public async Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location, int[] previousOffsets)
         {
             return await RecommenderServiceUtil.GetResponse(async () =>
             {
@@ -27,8 +27,13 @@ namespace quack_api.RecommenderAccessLayer
                     return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.RecommenderPathWrong);
 
                 // Setting up arguments for Commandline Proccess
-                string[] args = { recommenderSettings.RecommenderPath, accessToken, ((int)location).ToString(), recommenderSettings.RecommenderType };
                 string pythonPath = recommenderSettings.PythonPath;
+                string[] args = { 
+                    recommenderSettings.RecommenderPath, 
+                    accessToken, 
+                    ((int)location).ToString(),
+                    recommenderSettings.RecommenderType,
+                    string.Join(";",previousOffsets)};
 
                 string arguments = string.Join(" ", args);
 

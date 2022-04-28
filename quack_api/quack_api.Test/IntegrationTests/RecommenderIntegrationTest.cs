@@ -46,7 +46,7 @@ namespace quack_api.Test.IntegrationTests
         public async Task RecommenderController_GetPlaylist_Success()
         {
             //Act
-            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown);
+            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsTrue(result.Value.IsSuccessful);
@@ -61,7 +61,7 @@ namespace quack_api.Test.IntegrationTests
             int errorNo = (int)ResponseErrors.RecommenderPathWrong;
 
             //Act
-            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown);
+            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
@@ -76,7 +76,7 @@ namespace quack_api.Test.IntegrationTests
             int errorNo = (int)ResponseErrors.PathNotFound;
 
             //Act
-            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown);
+            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
@@ -91,7 +91,7 @@ namespace quack_api.Test.IntegrationTests
             int errorNo = (int)ResponseErrors.PathNull;
 
             //Act
-            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown);
+            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
@@ -106,7 +106,7 @@ namespace quack_api.Test.IntegrationTests
             int errorNo = (int)ResponseErrors.ResultFromCommandlineEmpty;
 
             //Act
-            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown);
+            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
@@ -121,7 +121,7 @@ namespace quack_api.Test.IntegrationTests
             int errorNo = (int)ResponseErrors.SomethingWentWrongInTheRecommender;
 
             //Act
-            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown);
+            var result = await RecommenderController.GetPlaylist("test", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);

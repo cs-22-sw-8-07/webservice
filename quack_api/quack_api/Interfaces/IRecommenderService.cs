@@ -17,7 +17,6 @@ namespace quack_api.Interfaces
         /// <param name="accessToken">string of a spotify acces token</param>
         /// <param name="qlt">Int representation of Quack location type</param>
         /// <returns></returns>
-        public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderStetting, string accessToken, QuackLocationType location);
-
+        public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderStetting, string accessToken, QuackLocationType location, int[] previousOffsets);
     }
 }

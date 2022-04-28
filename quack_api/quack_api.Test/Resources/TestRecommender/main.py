@@ -4,7 +4,8 @@ def main(args):
     test_json = """{
     "result": {
         "id": "placeholder",
-        "location_type": "placeholder",
+        "offset": 2,
+        "location_type": 1,
         "tracks": [
             {
                 "id": "1bBGFHJHsdra2aHGsm8xUA",

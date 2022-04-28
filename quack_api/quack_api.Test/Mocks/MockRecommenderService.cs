@@ -18,7 +18,7 @@ namespace quack_api.Test.Mocks
 {
     public class MockRecommenderService : IRecommenderService
     {
-        public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderSettings, string accessToken, QuackLocationType location)
+        public Task<ServiceResponse<PlaylistDTO>> GetPlaylist(RecommenderSettings recommenderStetting, string accessToken, QuackLocationType location, int[] previousOffsets)
         {
             if (accessToken != null)
             {

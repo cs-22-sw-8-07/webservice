@@ -27,13 +27,13 @@ namespace quack_api.Test.UnitTests
             RecommenderController recommenderController = new RecommenderController(options, new MockRecommenderService());
 
             //Act
-            var result = await recommenderController.GetPlaylist("test", QuackLocationType.beach);
+            var result = await recommenderController.GetPlaylist("test", QuackLocationType.beach, Array.Empty<int>());
 
             //Assert
             Assert.IsTrue(result.Value.IsSuccessful);
             Assert.IsInstanceOfType(result.Value.Result, typeof(PlaylistDTO));
             Assert.AreEqual("placeholder", result.Value.Result.Id);
-            Assert.AreEqual("placeholder", result.Value.Result.LocationType);
+            Assert.AreEqual(1, result.Value.Result.LocationType);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace quack_api.Test.UnitTests
             int errorNo = (int)ResponseErrors.ProcessCouldNotStart;
 
             //Act
-            var result = await recommenderController.GetPlaylist("ProcessCouldNotStart", QuackLocationType.unknown);
+            var result = await recommenderController.GetPlaylist("ProcessCouldNotStart", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
@@ -61,7 +61,7 @@ namespace quack_api.Test.UnitTests
             int errorNo = (int)ResponseErrors.AnExceptionOccurredInTheSAL;
 
             //Act
-            var result = await recommenderController.GetPlaylist("AnExceptionOccurredInTheSAL", QuackLocationType.unknown);
+            var result = await recommenderController.GetPlaylist("AnExceptionOccurredInTheSAL", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
@@ -77,7 +77,7 @@ namespace quack_api.Test.UnitTests
             int errorNo = (int)ResponseErrors.AnExceptionOccurredInAController;
 
             //Act
-            var result = await recommenderController.GetPlaylist("AnExceptionOccurredInAController", QuackLocationType.unknown);
+            var result = await recommenderController.GetPlaylist("AnExceptionOccurredInAController", QuackLocationType.unknown, Array.Empty<int>());
 
             //Assert
             Assert.IsFalse(result.Value.IsSuccessful);
