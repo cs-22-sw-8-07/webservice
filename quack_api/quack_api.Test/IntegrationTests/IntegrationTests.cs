@@ -31,7 +31,7 @@ namespace quack_api.Test.IntegrationTests
             var webHostBuilder =
                   new WebHostBuilder()
                   .UseConfiguration(Configuration)
-                        .UseEnvironment("production") // You can set the environment you want (development, staging, production)
+                        .UseEnvironment("development") // You can set the environment you want (development, staging, production)
                         .UseStartup<Startup>(); // Startup class of your web app project
             // Return test server
             return new TestServer(webHostBuilder);
@@ -56,7 +56,5 @@ namespace quack_api.Test.IntegrationTests
                 Assert.IsTrue(content.StartsWith("{\"result\":{\"id\":\"placeholder\",\"location_type\":1,\"tracks\":[{\"id\":\"1bBGFHJHsdra2aHGsm8xUA\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 01\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"03ufJ9eNwb42y1DwT7GsPG\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 02\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"0CCwHttXxDVYqVNz9mpu1F\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 03\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"2luBogOgg1wldL8RY3JLy9\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 04\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"71f3qaOe4qiGzZlAijDLmZ\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 05\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"6jTdKPbzzW5ijCxkNfF2sV\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 06\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"15sjWmSubcmIqpyb10d6GW\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 07\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"70OqgjeXXuEr2miAVvzAB1\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 08\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"2SBZynW1qWonWmwNuXupge\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 09\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"},{\"id\":\"0XTvIIjRHzdQfiZhta2FUN\",\"name\":\"Forest Sleep and Relaxing Sounds, Pt. 10\",\"artist\":\"Sleepy Times, Natural Sound Makers, Nature Recordings\",\"image\":\"https://i.scdn.co/image/ab67616d00004851ab5198a87e702f0b2d6a6263\"}],\"offset\":2},\"is_successful\":true,\"error_no\":0}"));
             }
         }
-
-
     }
 }
