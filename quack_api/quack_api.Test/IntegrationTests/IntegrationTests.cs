@@ -16,21 +16,20 @@ namespace quack_api.Test.IntegrationTests
 {
     [TestClass]
     public class IntegrationTests
-    {
-        public IConfiguration Configuration { get; set; }
+    {        
         /// <summary>
         /// Sets up a local test server where the configuration is giving through the appsettings file.
         /// </summary>
         /// <returns>a test server</returns>
         private TestServer GetTestServer()
         {
-            Configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.test.json")
                 .Build();
             
             var webHostBuilder =
                   new WebHostBuilder()
-                  .UseConfiguration(Configuration)
+                  .UseConfiguration(configuration)
                         .UseEnvironment("development") // You can set the environment you want (development, staging, production)
                         .UseStartup<Startup>(); // Startup class of your web app project
             // Return test server
