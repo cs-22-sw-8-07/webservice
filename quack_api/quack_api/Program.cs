@@ -1,11 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace quack_api
 {
@@ -20,7 +14,7 @@ namespace quack_api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("https://0.0.0.0:5001", "http://0.0.0.0:5000").UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }
