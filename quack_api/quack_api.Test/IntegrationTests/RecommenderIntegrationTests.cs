@@ -18,7 +18,7 @@ using quack_api.Interfaces;
 namespace quack_api.Test.IntegrationTests
 {
     [TestClass]
-    public class RecommenderIntegrationTest
+    public class RecommenderIntegrationTests
     {
         IConfiguration Configuration { get; set; }
         RecommenderController RecommenderController { get; set; }
@@ -88,6 +88,7 @@ namespace quack_api.Test.IntegrationTests
         {
             //Arrange
             RecommenderController.Options.Value.PythonPath = null;
+            RecommenderController.Options.Value.RecommenderType = null;
             int errorNo = (int)ResponseErrors.PathNull;
 
             //Act

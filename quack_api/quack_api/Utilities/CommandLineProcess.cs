@@ -51,8 +51,9 @@ namespace quack_api.Utilities
             if (!Process.Start()) throw new ProcessCouldNotStartException();
             var output = await Process.StandardOutput.ReadToEndAsync();
             await Process.WaitForExitAsync();
-            try { Process.Refresh(); } catch { }
-            return new ((ExitCode = Process.ExitCode).Value, output);
+            Process.Refresh();
+            ExitCode = Process.ExitCode;
+            return new (ExitCode.Value, output);
         }
 
         public void Dispose()

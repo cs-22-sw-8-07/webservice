@@ -26,18 +26,16 @@ namespace quack_api.RecommenderAccessLayer
                 if (!File.Exists(recommenderSettings.RecommenderPath))
                     return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.RecommenderPathWrong);
 
-                // Setting up arguments for Commandline Proccess
-                string pythonPath = recommenderSettings.PythonPath;
-                string[] args = { 
-                    recommenderSettings.RecommenderPath, 
-                    accessToken, 
+                // Setting up arguments for CommandlineProccess                
+                string arguments = string.Join(" ", (new string[]{
+                    recommenderSettings.RecommenderPath,
+                    accessToken,
                     ((int)location).ToString(),
                     recommenderSettings.RecommenderType,
-                    string.Join(";",previousOffsets)};
+                    string.Join(";",previousOffsets)
+                }));
 
-                string arguments = string.Join(" ", args);
-
-                using (CommandLineProcess cmd = new CommandLineProcess(pythonPath, arguments))
+                using (CommandLineProcess cmd = new CommandLineProcess(recommenderSettings.PythonPath, arguments))
                 {
                     // Get result from script
                     var result = await cmd.Run();
@@ -47,7 +45,7 @@ namespace quack_api.RecommenderAccessLayer
                         return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.SomethingWentWrongInTheRecommender);
 
                     // Check if result from CommandLineProcess is empty or null
-                    if ((result.Item2.Trim() == string.Empty) || (result.Item2 == null))
+                    if (string.IsNullOrWhiteSpace(result.Item2))
                         return new ServiceResponse<PlaylistDTO>(errorNo: (int)ResponseErrors.ResultFromCommandlineEmpty);
 
                     // Parse result from script and return response
